@@ -1,19 +1,19 @@
 ---
 name: xiaohongshu-operations
 description: "Operate Xiaohongshu tech notes, visual cards and pacing."
-version: 1.0.0
+version: 1.1.0
 author: 秋安 (ciyuan1234), Hermes Agent
 license: MIT
 platforms: [linux, macos, windows]
 metadata:
   hermes:
-    tags: [xiaohongshu, red, social-media, automation, creator, anti-ai, publishing]
+    tags: [xiaohongshu, red, social-media, automation, creator, anti-ai, publishing, github-sync]
     category: social-media
 ---
 
 # Xiaohongshu Operations Skill
 
-Operate Xiaohongshu (小红书) creator accounts for technology, developer, and productivity verticals. Enforces strict de-AI style rules, native screen capture standards, platform character limits, publishing pacing guardrails, and zero-drag monetization funnels.
+Operate Xiaohongshu (小红书) creator accounts for technology, developer, and productivity verticals. Enforces strict de-AI style rules, native screen capture standards, platform character limits, publishing pacing guardrails, zero-drag monetization funnels, and automated GitHub open-source synchronization.
 
 ## When to Use
 
@@ -23,6 +23,7 @@ Operate Xiaohongshu (小红书) creator accounts for technology, developer, and 
 - Checking publishing intervals and pacing gates (`scripts/guard.py`) to prevent spam penalties and account shadowbans.
 - Preparing unadulterated 3:4 ratio real UI screenshots instead of synthetic HTML mockup cards.
 - Designing zero-touch monetization loops (software licenses, curated digital checklists, verified partnerships).
+- Synchronizing local skill updates to the open-source GitHub repository (`ciyuan1234/xiaohongshu-operations-skill`).
 - Don't use for: generic marketing ad spam, automated comment begging ("扣1领资料"), or low-leverage freelance coding outsourcing.
 
 ## Prerequisites
@@ -30,6 +31,7 @@ Operate Xiaohongshu (小红书) creator accounts for technology, developer, and 
 - Python 3.9+ (Python 3.10+ recommended) for running local linting and guard verification scripts.
 - Image processing utility: `sips` (macOS native) or `Pillow` / `ImageMagick` for cropping captures to 3:4 aspect ratio (1080x1440).
 - Platform account: Xiaohongshu creator account (`creator.xiaohongshu.com`).
+- GitHub repository: `https://github.com/ciyuan1234/xiaohongshu-operations-skill`.
 
 ## Quick Reference
 
@@ -45,6 +47,9 @@ python3 scripts/guard.py record-note
 
 # Crop image to standard 3:4 ratio (1080x1440)
 python3 scripts/crop_tool.py --input screenshot.png --output cover.png
+
+# Trigger immediate manual sync to GitHub
+sync-skills
 ```
 
 ## Core Invariants & Rules
@@ -74,6 +79,11 @@ python3 scripts/crop_tool.py --input screenshot.png --output cover.png
    - Software affiliate & license distribution (正版软件分销/数码荔枝) organically referenced in profile or comments.
    - Curated lightweight digital assets ($9.9–$39 RMB) with automated delivery.
    - Strictly ban custom coding / freelance services (endless scope creep, zero leverage).
+
+6. **Automated GitHub Open-Source Synchronization**:
+   - Local skill changes are symlinked directly to the Git repository.
+   - The macOS LaunchAgent (`com.kite.skill-github-sync`) watches for modifications and runs tests before committing.
+   - Broken unit tests block auto-push to protect remote repository health.
 
 ## Detailed References
 
@@ -114,16 +124,21 @@ python3 scripts/crop_tool.py --input screenshot.png --output cover.png
    - Submit through creator center or automated browser session.
    - Execute `python3 scripts/guard.py record-note` to log the publish timestamp.
 
+7. **Synchronize Skill Updates**:
+   - When modifying rules, scripts, or references, changes are automatically pushed to GitHub by `com.kite.skill-github-sync` daemon upon test pass, or via `sync-skills`.
+
 ## Pitfalls
 
 - **Do not wrap screenshots in synthetic HTML templates**: Readers immediately spot synthetic card wrappers (e.g. fake macOS window frames) and downvote as marketing spam.
 - **Do not use salesy comment bait ("评论区扣1领资料")**: Triggers platform spam filtering and reduces organic recommendation weights.
 - **Do not hardcode absolute paths**: Always use repo-relative paths for assets and scripts.
 - **Do not publish during midnight blackout (00:00–07:00 CST)**: Zero explore feed traffic, triggers automated nocturnal bot audits.
+- **Do not break unit tests during skill editing**: Automated GitHub push executes `python3 -m unittest` pre-flight gate; broken tests abort auto-push to prevent pushing failing code.
 
 ## Verification
 
 - Linter passes clean: `python3 scripts/lint.py <draft>` exits with code 0.
-- Pacing gate confirms: `python3 scripts/guard.py check` returns `"allowed": true`.
+- Pacing gate confirms: `python3 scripts/guard.py check` returns `\"allowed\": true`.
 - Output image is valid 3:4 ratio (1080x1440 or 1200x1600).
 - Title character count <= 20 characters verified.
+- Unit tests pass: `python3 -m unittest discover -s tests -p "test_*.py"` exits with code 0.
