@@ -26,13 +26,6 @@ Operate Xiaohongshu (小红书) creator accounts for technology, developer, and 
 - Designing zero-touch monetization loops (software licenses, curated digital checklists, verified partnerships).
 - Synchronizing local skill updates to the open-source GitHub repository (`ciyuan1234/xiaohongshu-operations-skill`).
 
-## Prerequisites
-
-- Python 3.9+ (Python 3.10+ recommended) for running local linting, guard verification, and sync scripts.
-- Image processing utility: `sips` (macOS native) or `Pillow` / `ImageMagick` for cropping captures to 3:4 aspect ratio (1080x1440).
-- Platform accounts: Xiaohongshu creator account (`creator.xiaohongshu.com`) and WeChat Official Account (`mp.weixin.qq.com`).
-- GitHub repository: `https://github.com/ciyuan1234/xiaohongshu-operations-skill`.
-
 ## Quick Reference
 
 ```bash
